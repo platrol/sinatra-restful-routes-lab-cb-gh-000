@@ -4,6 +4,40 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
   end
   get '/' do
-    erb :index
+    :recipes
+  end
+
+  get '/recipes/new' do
+    erb :new
+  end
+
+  get '/recipes/:id/edit' do
+    @recipe = Recipe.find_by_id(params[:id])
+  end
+
+  get '/recipes/:id' do
+    @recipe = Recipe.find_by_id(params[:id])
+    erb :recipe
+  end
+  get '/recipes' do
+    @all = Recipe.all
+    erb :recipes
+  end
+
+  post '/recipes' do
+    Recipe.create(params)
+  end
+
+  patch '/recipe/:id' do
+    @recipe = Recipe.find_by_id(params[:id])
+    @recipe.name
+    @recipe.ingredients
+    @recipe.cook_time
+    @recipe.save
+  end
+
+  delete '/recipes/:id'
+    @recipe = Recipe.find_by_id(params[:id])
+    @recipe.delete
   end
 end
